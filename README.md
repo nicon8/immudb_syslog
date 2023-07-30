@@ -1,8 +1,8 @@
 # Immudb syslog example
 
-Python modules which stores syslog entries on [immudb vault cloud](https://vault.immudb.io/). The module can work in two different ways:
-- **reader**: the module will read line by line a syslog file passed as input, parse line by line, and push entry by entry to immudb vault cloud](https://vault.immudb.io/)
-- **server**: the module will run a standalone syslog server which can be used as a remote destination for your current syslog server. Whenever the server receive an entries, it will push the entry to immudb vault cloud](https://vault.immudb.io/)
+Python modules that store syslog entries on the [immudb vault cloud](https://vault.immudb.io/). The module can work in two different ways:
+- **reader**: The module will read a syslog file passed as input, parsing it line by line, and pushing each entry to [immudb vault cloud](https://vault.immudb.io/)
+- **server**: The module will run a standalone syslog server that can be used as a remote destination for your current syslog server. Whenever the server receives entries, it will push the entries to the immudb vault cloud [immudb vault cloud](https://vault.immudb.io/)
 
 # Usage
 
@@ -27,10 +27,14 @@ general argument:
                         immudb collection to use
 ```
 # Getting started
-To run the examples, you need a personal key obtained from [immudb vault cloud](https://vault.immudb.io/). Free plan is more than enough.
-The immudb key is passed to the module using the environmental variable "IMMUDBKEY"
+To run the examples, you'll need a personal key obtained from [immudb vault cloud](https://vault.immudb.io/). The Free plan should be more than sufficient for most use cases.
 
-The easiest way to use the module is using docker. A predefined Dockerfile is in the repo.
+The immudb key should be passed to the module using the environmental variable "IMMUDBKEY".
+
+The easiest way to use the module is with Docker. There is a predefined Dockerfile available in the repository, which you can use to build the Docker image. This will help you run the module seamlessly within a containerized environment.
+
+
+
 
 ## Docker
 Clone the repo
@@ -41,7 +45,7 @@ git clone https://github.com/nicon8/immudb_syslog.git
 #Build docker image
 docker build --tag immudb_syslog
 ```
-Once image is built, there is no need to maintain the docker container in execution. We can directly specify the command inside docker run command.
+Once the image is built, there is no need to maintain the docker container during execution. We can directly specify the command inside 'docker run' command.
 
 ## Reading from syslog file with Docker
 
@@ -52,7 +56,7 @@ IMMUDBKEY=default.xxx
 docker run -t -e IMMUDBKEY=$IMMUDBKEY --mount type=bind,source=/var/log/,target=/var/log immudb_syslog python3  -m immudb_syslog -f /var/log/kern.log -c default
 ```
 
-The --mount option is needed in this example to allow the Docker container to find the host system file logs. You can easily change the example using one of the different syslog file present in your machine. \
+The --mount option is required in this example to enable the Docker container to access the host system's log file. You can easily modify the example to use any of the different syslog file present in your machine. \
 es. in my ubuntu syslog config files are (from /etc/rsyslog.d/50-default.conf):
 * /var/log/auth.log
 * /var/log/syslog
@@ -65,19 +69,18 @@ es. in my ubuntu syslog config files are (from /etc/rsyslog.d/50-default.conf):
 
 
 ## Launch a local standalone syslog server with Docker
-**_NOTE:_** **Remember to change the value of the variable IMMUDBKEY using your personal key obtained from [immudb vault cloud](https://vault.immudb.io/)**
+**_NOTE:_** **Remember to update the value of the variable IMMUDBKEY with your personal key obtained from [immudb vault cloud](https://vault.immudb.io/)**
 ```
 #Run it as standalone server
 PORT=1514
 IMMUDBKEY=default.xxx
 docker run -t -e IMMUDBKEY=$IMMUDBKEY -p $PORT:$PORT/udp immudb_syslog python3  -m immudb_syslog -s -l 0.0.0.0 -p $PORT -c syslog
 ```
-Once it is running, to test the server you can type on another shell:
+Once it is running, you can test the server typing in another shell:
 ```
 logger -n 127.0.0.1 -P 1514 -p 1 -t test -d -i -- I'm very important and I want to be store safely
 ```
-
-The docker container in this example will map port 1514 to port 1514 on the host system, and this has to be the same port used by the module standalone syslog server.
+The Docker container in this example will map port 1514 to port 1514 on the host system, and it is essential that this port matches the one used by the module's standalone syslog server.
 
 ## Python env
 
@@ -104,7 +107,7 @@ python3 -m immudb_syslog -f "/var/log/syslog"
 ```
 python3 -m immudb_syslog -s -l "0.0.0.0" -p 1514 -c default
 ```
-Once it is running, to test the server you can type on another shell:
+Once it is running, you can test the server typing in another shell:
 ```
 logger -n 127.0.0.1 -P 1514 -p 1 -t test -d -i -- I'm very important and I want to be store safely
 ```
@@ -115,6 +118,6 @@ logger -n 127.0.0.1 -P 1514 -p 1 -t test -d -i -- I'm very important and I want 
 [Custom HTTP Handler for logging](https://stackoverflow.com/questions/51525237/how-to-set-up-httphandler-for-python-logging)
 
 ## TODO
-* Complete error handling (missing collection, missing file, ..)
-* Manage collection creation
-* Syslog Parser to rewrite
+* Implement complete error handling (e.g., handling missing collections, missing files, etc.).
+* Handle collection creation.
+* Rewrite the Syslog Parser.
