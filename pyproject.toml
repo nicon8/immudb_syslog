@@ -1,0 +1,19 @@
+# pyproject.toml
+
+[build-system]
+requires = ["setuptools>=64.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "immudb_syslog"
+version = "0.0.1"
+description = "My awesome ImmuDB syslog application"
+readme = "README.md"
+authors = [{ name = "Nicola Manica", email = "nicola.manica@gmail.com" }]
+dependencies = [
+    "tomli",
+    "requests"
+]
+
+[project.scripts]
+immudb_syslog = "immudb_syslog.__main__:main"

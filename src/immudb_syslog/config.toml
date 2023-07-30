@@ -1,0 +1,4 @@
+# config.toml
+
+[immudb]
+url = "https://vault.immudb.io/ics/api/v1/ledger/"
