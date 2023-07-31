@@ -49,7 +49,7 @@ Once the image is built, there is no need to maintain the docker container durin
 
 ## Reading from syslog file with Docker
 
-**_NOTE:_** **Remember to change the value of the variable IMMUDBKEY using your personal key obtained from [immudb vault cloud](https://vault.immudb.io/)**
+**_NOTE:_** **Rememberyy to change the value of the variable IMMUDBKEY using your personal key obtained from [immudb vault cloud](https://vault.immudb.io/)**
 
 ```
 IMMUDBKEY=default.xxx
@@ -100,12 +100,13 @@ Install the module locally
 python3 -m pip install -e .
 ```
 ## Reading from syslog file
+**_NOTE:_** **Remember to update the value of the variable IMMUDBKEY with your personal key obtained from [immudb vault cloud](https://vault.immudb.io/)**
 ```
-python3 -m immudb_syslog -f "/var/log/syslog"
+IMMUDBKEY=default.xxx python3 -m immudb_syslog -f "/var/log/syslog"
 ```
 ## Launch a local standalone syslog server
 ```
-python3 -m immudb_syslog -s -l "0.0.0.0" -p 1514 -c default
+IMMUDBKEY=default.xxx python3 -m immudb_syslog -s -l "0.0.0.0" -p 1514 -c default
 ```
 Once it is running, you can test the server typing in another shell:
 ```
